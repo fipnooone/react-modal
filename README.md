@@ -1,15 +1,14 @@
 ```js
-import { Modal, ModalContext } from ".../Modal/Modal";
+import { Modal } from ".../Modal/Modal";
 
 // index.tsx or another main component
 <Modal.Provider>
-	<Modal.Consumer />
 	<OtherComponent />
 </Modal.Provider>;
 
 // OtherComponent.tsx
 const OtherComponent = () => {
-	const modal = useContext(ModalContext);
+	const modal = Modal.use();
 
 	useEffect(() => {
 		modal.set(<div>Modal</div>); // откроется автоматически

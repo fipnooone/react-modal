@@ -1,10 +1,10 @@
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 export type ModalProps = {
     children?: React.ReactNode;
 };
 
-export const ModalContext = createContext<{ content: React.ReactNode; set: (cn: React.ReactNode) => void; close: () => void; open: () => void } | null>(null);
+const ModalContext = createContext<{ content: React.ReactNode; set: (cn: React.ReactNode) => void; close: () => void; open: () => void } | null>(null);
 
 const ModalConsumer: React.FC<ModalProps> = (props) => {
     const modalRef = useRef<HTMLDivElement>(null);
@@ -67,13 +67,15 @@ const ModalProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) =
 
     return (
         <>
-            <ModalContext.Provider value={{ content, set, close, open }}>{children}</ModalContext.Provider>
+            <ModalContext.Provider value={{ content, set, close, open }}>
+                <ModalConsumer />
+                {children}
+            </ModalContext.Provider>
         </>
     );
 };
 
 export class Modal {
-    public static Consumer = ModalConsumer;
     public static Provider = ModalProvider;
 
     public static open() {
@@ -82,4 +84,7 @@ export class Modal {
     public static close() {
         document.dispatchEvent(new CustomEvent('closeModal'));
     }
+
+    public static use = () => useContext(ModalContext);
 }
+
