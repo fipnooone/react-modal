@@ -2,7 +2,7 @@
 	"name": "@fipnooone/react-modal",
 	"version": "1.0.6",
 	"main": "./dist/index.js",
-	"types": "./types",
+	"types": "./types/index.d.ts",
 	"author": "fipnooone",
 	"license": "ISC",
 	"devDependencies": {

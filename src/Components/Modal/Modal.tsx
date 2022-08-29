@@ -1,19 +1,22 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
-export type ModalProps = {
-    children?: React.ReactNode;
-};
+const ModalContext = createContext<{ content: React.ReactElement | null; set: (cn: React.ReactElement) => void; close: () => void; open: () => void } | null>(null);
 
-const ModalContext = createContext<{ content: React.ReactNode; set: (cn: React.ReactNode) => void; close: () => void; open: () => void } | null>(null);
-
-const ModalConsumer: React.FC<ModalProps> = (props) => {
+const ModalConsumer: React.FC = () => {
     const modalRef = useRef<HTMLDivElement>(null);
     const [isOpen, setOpen] = useState(false);
 
     useEffect(() => {
         const listener = (event: KeyboardEvent) => {
-            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-                (modalRef.current?.getElementsByClassName('form')[0] as HTMLFormElement)?.requestSubmit();
+            switch (event.code) {
+                case 'Enter':
+                case 'NumpadEnter':
+                    (modalRef.current?.getElementsByClassName('form')[0] as HTMLFormElement)?.requestSubmit();
+                    break;
+                case 'Escape':
+                    setOpen(false);
+                    break;
+
             }
         };
 
@@ -53,10 +56,10 @@ const ModalConsumer: React.FC<ModalProps> = (props) => {
     );
 };
 
-const ModalProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-    const [content, setContent] = useState<React.ReactNode | null>(null);
+const ModalProvider: React.FC<{ children?: React.ReactElement }> = ({ children }) => {
+    const [content, setContent] = useState<React.ReactElement | null>(null);
 
-    const set = (cn: React.ReactNode) => {
+    const set = (cn: React.ReactElement) => {
         setContent(cn);
         Modal.open();
     };
@@ -75,16 +78,23 @@ const ModalProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) =
     );
 };
 
-export class Modal {
-    public static Provider = ModalProvider;
-
-    public static open() {
-        document.dispatchEvent(new CustomEvent('openModal'));
-    }
-    public static close() {
-        document.dispatchEvent(new CustomEvent('closeModal'));
-    }
-
-    public static use = () => useContext(ModalContext);
+export const Modal = {
+    Provider: ModalProvider,
+    open: () => document.dispatchEvent(new CustomEvent('openModal')),
+    close: () => document.dispatchEvent(new CustomEvent('closeModal')),
+    use: () => useContext(ModalContext)
 }
+
+// export class Modal {
+//     public static Provider = ModalProvider;
+
+//     public static open() {
+//         document.dispatchEvent(new CustomEvent('openModal'));
+//     }
+//     public static close() {
+//         document.dispatchEvent(new CustomEvent('closeModal'));
+//     }
+
+//     public static use = () => useContext(ModalContext);
+// }
 
