@@ -1,13 +1,19 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 var ModalContext = createContext(null);
-var ModalConsumer = function (props) {
+var ModalConsumer = function () {
     var modalRef = useRef(null);
     var _a = useState(false), isOpen = _a[0], setOpen = _a[1];
     useEffect(function () {
         var listener = function (event) {
             var _a, _b;
-            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-                (_b = (_a = modalRef.current) === null || _a === void 0 ? void 0 : _a.getElementsByClassName('form')[0]) === null || _b === void 0 ? void 0 : _b.requestSubmit();
+            switch (event.code) {
+                case 'Enter':
+                case 'NumpadEnter':
+                    (_b = (_a = modalRef.current) === null || _a === void 0 ? void 0 : _a.getElementsByClassName('form')[0]) === null || _b === void 0 ? void 0 : _b.requestSubmit();
+                    break;
+                case 'Escape':
+                    setOpen(false);
+                    break;
             }
         };
         var handleOpenEvent = function () {
@@ -50,18 +56,20 @@ var ModalProvider = function (_a) {
             React.createElement(ModalConsumer, null),
             children)));
 };
-var Modal = /** @class */ (function () {
-    function Modal() {
-    }
-    Modal.open = function () {
-        document.dispatchEvent(new CustomEvent('openModal'));
-    };
-    Modal.close = function () {
-        document.dispatchEvent(new CustomEvent('closeModal'));
-    };
-    Modal.Provider = ModalProvider;
-    Modal.use = function () { return useContext(ModalContext); };
-    return Modal;
-}());
-export { Modal };
+export var Modal = {
+    Provider: ModalProvider,
+    open: function () { return document.dispatchEvent(new CustomEvent('openModal')); },
+    close: function () { return document.dispatchEvent(new CustomEvent('closeModal')); },
+    use: function () { return useContext(ModalContext); }
+};
+// export class Modal {
+//     public static Provider = ModalProvider;
+//     public static open() {
+//         document.dispatchEvent(new CustomEvent('openModal'));
+//     }
+//     public static close() {
+//         document.dispatchEvent(new CustomEvent('closeModal'));
+//     }
+//     public static use = () => useContext(ModalContext);
+// }
 //# sourceMappingURL=Modal.js.map

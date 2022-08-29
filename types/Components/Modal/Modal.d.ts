@@ -1,17 +1,14 @@
 import React from 'react';
-export declare type ModalProps = {
-    children?: React.ReactNode;
-};
-export declare class Modal {
-    static Provider: React.FC<{
-        children?: any;
+export declare const Modal: {
+    Provider: React.FC<{
+        children?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
     }>;
-    static open(): void;
-    static close(): void;
-    static use: () => {
-        content: any;
-        set: (cn: any) => void;
+    open: () => boolean;
+    close: () => boolean;
+    use: () => {
+        content: React.ReactElement | null;
+        set: (cn: React.ReactElement) => void;
         close: () => void;
         open: () => void;
     } | null;
-}
+};
