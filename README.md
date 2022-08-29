@@ -1,5 +1,5 @@
 ```js
-import { Modal } from ".../Modal/Modal";
+import Modal from "@fipnooone/react-modal";
 
 // index.tsx or another main component
 <Modal.Provider>
