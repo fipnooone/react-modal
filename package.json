@@ -4,6 +4,7 @@
 	"main": "./dist/index.js",
 	"types": "./types/index.d.ts",
 	"author": "fipnooone",
+	"type": "module",
 	"license": "ISC",
 	"devDependencies": {
 		"@types/react": "^18.0.17",
