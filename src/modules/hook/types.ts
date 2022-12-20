@@ -12,4 +12,4 @@ export type Close = (callback?: (isOpen: boolean) => void) => void;
 
 export type SetOpen = (value: StateValue<boolean>, callback?: (isOpen: boolean) => void) => void;
 
-export type UseModal = (options: ModalStyles) => [React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>, Set, SetOpen, Close];
+export type UseModal = (options?: ModalStyles) => [React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>, Set, SetOpen, Close];

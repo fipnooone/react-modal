@@ -1,26 +1,24 @@
-```js
-import Modal from "@fipnooone/react-modal";
+```tsx
+import useModal from "@fipnooone/react-modal";
 
-// index.tsx or another main component
-<Modal.Provider>
-	<OtherComponent />
-</Modal.Provider>;
-
-// OtherComponent.tsx
-const OtherComponent = () => {
-	const modal = Modal.use();
+const MyComponent = () => {
+	const [Modal, set, open, close] = useModal();
 
 	useEffect(() => {
-		modal.set(<div>Modal</div>); // откроется автоматически
+		set(<div>Modal content</div>);
+		set((prevContent, prevOpen) => [<span>-_-<span>, false]);
 
-		modal.open();
-		modal.close();
-		Modal.open();
-		Modal.close();
-
-		modal.content;
+		open();
+		close();
+		open((prev) => !prev);
+		open(false);
 	}, []);
 
-	return <></>;
+	return (
+		<div>
+			<Modal />
+			<h1>Hello!</h1>
+		</div>
+	);
 };
 ```
