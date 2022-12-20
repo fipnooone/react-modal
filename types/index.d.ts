@@ -1,2 +1,2 @@
-import { useModal } from './modules/hook';
+import { useModal } from './modules';
 export default useModal;

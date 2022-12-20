@@ -15,16 +15,16 @@ import { createModal } from '../component';
 export var useModal = function (options) {
     var _a = useCallbackState(false), isOpen = _a[0], setOpen = _a[1];
     var _b = useCallbackState(), content = _b[0], setContent = _b[1];
-    var close = function () { return setOpen(false); };
-    var set = useCallback(function (contentNode) {
+    var close = function (callback) { return setOpen(false, callback); };
+    var set = useCallback(function (contentNode, callback) {
         if (typeof contentNode === 'function') {
             var result = contentNode(content, isOpen);
             var _a = Array.isArray(result) ? result : [result, true], newContent = _a[0], newOpen = _a[1];
-            setContent(newContent);
+            setContent(newContent, callback);
             setOpen(newOpen);
             return;
         }
-        setContent(contentNode);
+        setContent(contentNode, callback);
         setOpen(true);
     }, [isOpen, content]);
     useEffect(function () {
