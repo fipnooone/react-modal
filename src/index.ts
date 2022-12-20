@@ -1,3 +1,3 @@
-import { Modal } from "./Components/Modal/Modal";
+import { useModal } from './modules/hook';
 
-export default Modal;
+export default useModal;
