@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Provider } from '../context';
-import styles from './styles.module.css';
+import styles from './tyles.module.css';
 import { ModalOptions, ModalProps } from './types';
 
 export const createModal = ({ block, overlay, window, close, open, set }: ModalOptions) =>
