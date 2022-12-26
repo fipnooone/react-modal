@@ -18,7 +18,7 @@ export const createModal = ({ block, overlay, window, close, open, set }: ModalO
         const handleClose = () => close();
 
         return ReactDOM.createPortal(
-            <div className={`modal ${styles.block}` + (isOpen ? ` ${styles.open}` : '')} style={block} ref={ref}>
+            <div className={`modal ${styles.block}` + (isOpen ? ` ${styles.open} open` : '')} style={block} ref={ref}>
                 <div className={`modal__overlay ${styles.overlay}`} onClick={handleClose} style={overlay} />
                 <div className={`modal__window ${styles.window}`} style={window}>
                     <Provider modal={{ close, open, set }}>{children}</Provider>
