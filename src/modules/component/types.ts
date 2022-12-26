@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { ContextValue } from '../context/types';
+
 export interface ModalProps {
     children?: ReactNode;
     isOpen?: boolean;
@@ -13,6 +15,4 @@ export interface ModalStyles {
     overlay?: React.CSSProperties;
 }
 
-export interface ModalLogic {
-    handleClose: () => void;
-}
+export type ModalLogic = ContextValue;

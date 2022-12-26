@@ -12,6 +12,7 @@ var __assign = (this && this.__assign) || function () {
 import { useCallbackState } from '@fipnooone/hooks';
 import { useCallback, useEffect, useMemo } from 'react';
 import { createModal } from '../component';
+import { names } from '../events';
 export var useModal = function (options) {
     var _a = useCallbackState(false), isOpen = _a[0], setOpen = _a[1];
     var _b = useCallbackState(), content = _b[0], setContent = _b[1];
@@ -35,19 +36,22 @@ export var useModal = function (options) {
                     break;
             }
         };
+        var handleOpen = (function (event) { return setOpen(event.detail.open); });
         document.addEventListener('keydown', listener);
+        document.addEventListener(names.open, handleOpen);
         return function () {
             document.removeEventListener('keydown', listener);
+            document.removeEventListener(names.open, handleOpen);
         };
     }, []);
     var Modal = useMemo(function () {
-        var newModal = createModal(__assign(__assign({}, options), { handleClose: close }));
+        var newModal = createModal(__assign(__assign({}, options), { close: close, open: setOpen, set: set }));
         newModal.defaultProps = {
             children: content,
             isOpen: isOpen,
         };
         return newModal;
     }, [isOpen, content]);
-    return [Modal, set, setOpen, close];
+    return [Modal, { set: set, open: setOpen, close: close }];
 };
 //# sourceMappingURL=index.js.map

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from '../context';
 import styles from './styles.module.css';
 export var createModal = function (_a) {
-    var block = _a.block, overlay = _a.overlay, window = _a.window, handleClose = _a.handleClose;
+    var block = _a.block, overlay = _a.overlay, window = _a.window, close = _a.close, open = _a.open, set = _a.set;
     return React.forwardRef(function (_a, ref) {
         var children = _a.children, isOpen = _a.isOpen;
         var getRoot = function () {
@@ -11,9 +12,11 @@ export var createModal = function (_a) {
                 return root;
             return document.body;
         };
+        var handleClose = function () { return close(); };
         return ReactDOM.createPortal(React.createElement("div", { className: "modal ".concat(styles.block) + (isOpen ? " ".concat(styles.open) : ''), style: block, ref: ref },
             React.createElement("div", { className: "modal__overlay ".concat(styles.overlay), onClick: handleClose, style: overlay }),
-            React.createElement("div", { className: "modal__window ".concat(styles.window), style: window }, children)), getRoot());
+            React.createElement("div", { className: "modal__window ".concat(styles.window), style: window },
+                React.createElement(Provider, { modal: { close: close, open: open, set: set } }, children))), getRoot());
     });
 };
 //# sourceMappingURL=index.js.map

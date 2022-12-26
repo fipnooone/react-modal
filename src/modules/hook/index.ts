@@ -2,6 +2,7 @@ import { useCallbackState } from '@fipnooone/hooks';
 import { ReactNode, useCallback, useEffect, useMemo } from 'react';
 
 import { createModal } from '../component';
+import { ModalOpenEvent, names } from '../events';
 import { Close, Set, UseModal } from './types';
 
 export const useModal: UseModal = (options) => {
@@ -38,15 +39,19 @@ export const useModal: UseModal = (options) => {
             }
         };
 
+        const handleOpen = ((event: ModalOpenEvent) => setOpen(event.detail.open)) as EventListener;
+
         document.addEventListener('keydown', listener);
+        document.addEventListener(names.open, handleOpen);
 
         return () => {
             document.removeEventListener('keydown', listener);
+            document.removeEventListener(names.open, handleOpen);
         };
     }, []);
 
     const Modal = useMemo(() => {
-        const newModal = createModal({ ...options, handleClose: close });
+        const newModal = createModal({ ...options, close, open: setOpen, set });
 
         newModal.defaultProps = {
             children: content,
@@ -56,5 +61,5 @@ export const useModal: UseModal = (options) => {
         return newModal;
     }, [isOpen, content]);
 
-    return [Modal, set, setOpen, close];
+    return [Modal, { set, open: setOpen, close }];
 };
