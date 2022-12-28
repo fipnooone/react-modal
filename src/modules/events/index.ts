@@ -1,4 +1,4 @@
-const fire = (name: string, value: boolean) => document.dispatchEvent(new CustomEvent(`f-modal-event`, { detail: { open: value } }));
+const fire = (name: string, value: boolean) => document.dispatchEvent(new CustomEvent(name, { detail: { open: value } }));
 
 export type ModalOpenEvent = CustomEvent<{ open: boolean }>;
 

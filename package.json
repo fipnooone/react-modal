@@ -5,7 +5,21 @@
 	"types": "./types/index.d.ts",
 	"author": "fipnooone",
 	"license": "ISC",
-	"devDependencies": {
+	"scripts": {
+		"build": "tsc",
+		"publish": "npm publish --access public",
+		"lint": "eslint --fix --ext .ts,.tsx ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/fipnooone/react-modal.git"
+	},
+	"bugs": {
+		"url": "https://github.com/fipnooone/react-modal/issues"
+	},
+	"homepage": "https://github.com/fipnooone/react-modal#readme",
+	"peerDependencies": {
+		"@fipnooone/hooks": "^1.0.9",
 		"@types/react": "^18.0.26",
 		"@types/react-dom": "^18.0.9",
 		"@typescript-eslint/eslint-plugin": "^5.35.1",
@@ -20,21 +34,5 @@
 		"tslint": "^6.1.3",
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^4.7.4"
-	},
-	"scripts": {
-		"build": "tsc",
-		"publish": "npm publish --access public",
-		"lint": "eslint --fix --ext .ts,.tsx ."
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/fipnooone/react-modal.git"
-	},
-	"bugs": {
-		"url": "https://github.com/fipnooone/react-modal/issues"
-	},
-	"homepage": "https://github.com/fipnooone/react-modal#readme",
-	"dependencies": {
-		"@fipnooone/hooks": "^1.0.9"
 	}
 }

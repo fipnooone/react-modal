@@ -1,4 +1,4 @@
-var fire = function (name, value) { return document.dispatchEvent(new CustomEvent("f-modal-event", { detail: { open: value } })); };
+var fire = function (name, value) { return document.dispatchEvent(new CustomEvent(name, { detail: { open: value } })); };
 var name = 'f-modal-event:';
 export var names = {
     open: "".concat(name).concat(close),
