@@ -61,5 +61,5 @@ export const useModal: UseModal = (options) => {
         return newModal;
     }, [isOpen, content]);
 
-    return [Modal, { set, open: setOpen, close }];
+    return [Modal, { set, open: setOpen, close, isOpen }];
 };

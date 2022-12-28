@@ -16,6 +16,7 @@ export interface ModalControls {
     set: Set;
     open: SetOpen;
     close: Close;
+    isOpen: boolean;
 }
 
 export type UseModal = (options?: ModalStyles) => [React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>, ModalControls];

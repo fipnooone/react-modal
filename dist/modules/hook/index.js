@@ -52,6 +52,6 @@ export var useModal = function (options) {
         };
         return newModal;
     }, [isOpen, content]);
-    return [Modal, { set: set, open: setOpen, close: close }];
+    return [Modal, { set: set, open: setOpen, close: close, isOpen: isOpen }];
 };
 //# sourceMappingURL=index.js.map
