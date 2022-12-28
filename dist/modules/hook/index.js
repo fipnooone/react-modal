@@ -10,12 +10,13 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import { useCallbackState } from '@fipnooone/hooks';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { createModal } from '../component';
 import { names } from '../events';
 export var useModal = function (options) {
     var _a = useCallbackState(false), isOpen = _a[0], setOpen = _a[1];
     var _b = useCallbackState(), content = _b[0], setContent = _b[1];
+    var modalRef = useRef(null);
     var close = function (callback) { return setOpen(false, callback); };
     var set = useCallback(function (contentNode, callback) {
         if (typeof contentNode === 'function') {
@@ -49,6 +50,7 @@ export var useModal = function (options) {
         newModal.defaultProps = {
             children: content,
             isOpen: isOpen,
+            ref: modalRef,
         };
         return newModal;
     }, [isOpen, content]);

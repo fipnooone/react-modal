@@ -1,5 +1,5 @@
 import { useCallbackState } from '@fipnooone/hooks';
-import { ReactNode, useCallback, useEffect, useMemo } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { createModal } from '../component';
 import { ModalOpenEvent, names } from '../events';
@@ -8,6 +8,7 @@ import { Close, Set, UseModal } from './types';
 export const useModal: UseModal = (options) => {
     const [isOpen, setOpen] = useCallbackState(false);
     const [content, setContent] = useCallbackState<ReactNode>();
+    const modalRef = useRef<HTMLDivElement>(null);
 
     const close: Close = (callback) => setOpen(false, callback);
 
@@ -56,6 +57,7 @@ export const useModal: UseModal = (options) => {
         newModal.defaultProps = {
             children: content,
             isOpen,
+            ref: modalRef,
         };
 
         return newModal;
