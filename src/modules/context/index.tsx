@@ -7,7 +7,13 @@ import { ContextValue, ProviderProps } from './types';
 
 const Context = React.createContext<ContextValue | null>(null);
 
-export const Provider: FC<ProviderProps> = ({ modal }) => ReactDOM.createPortal(<Context.Provider value={modal}>{<Modal />}</Context.Provider>, getBlock());
+export const Provider: FC<ProviderProps> = ({ modal, children }) =>
+    ReactDOM.createPortal(
+        <Context.Provider value={modal}>
+            <Modal>{children}</Modal>
+        </Context.Provider>,
+        getBlock()
+    );
 
 export const useContext = () => {
     const modal = React.useContext(Context);

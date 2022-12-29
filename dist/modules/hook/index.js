@@ -29,7 +29,7 @@ export var useModal = function (options) {
             document.removeEventListener(names.open, handleOpen);
         };
     }, []);
-    var Modal = useMemo(function () { return React.createElement(Provider, { modal: { close: close, isOpen: isOpen, open: setOpen, set: set, styles: options } }); }, [isOpen, content]);
+    var Modal = useMemo(function () { return React.createElement(Provider, { modal: { close: close, isOpen: isOpen, open: setOpen, set: set, styles: options } }, content); }, [isOpen, content]);
     return [Modal, { set: set, open: setOpen, close: close, isOpen: isOpen }];
 };
 //# sourceMappingURL=index.js.map

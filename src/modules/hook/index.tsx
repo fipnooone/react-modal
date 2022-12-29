@@ -44,7 +44,7 @@ export const useModal: UseModal = (options) => {
         };
     }, []);
 
-    const Modal = useMemo(() => <Provider modal={{ close, isOpen, open: setOpen, set, styles: options }} />, [isOpen, content]);
+    const Modal = useMemo(() => <Provider modal={{ close, isOpen, open: setOpen, set, styles: options }}>{content}</Provider>, [isOpen, content]);
 
     return [Modal, { set, open: setOpen, close, isOpen }];
 };
