@@ -1,33 +1,26 @@
 import { useCallbackState } from '@fipnooone/hooks';
-import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
+import React from 'react';
+import { ReactNode, useCallback, useEffect, useMemo } from 'react';
 
-import { createModal } from '../component';
+import { Provider } from '../context';
 import { ModalOpenEvent, names } from '../events';
-import { Close, Set, UseModal } from './types';
+import { Callback, Close, Set, StateNode, UseModal } from './types';
 
 export const useModal: UseModal = (options) => {
     const [isOpen, setOpen] = useCallbackState(false);
     const [content, setContent] = useCallbackState<ReactNode>();
-    const modalRef = useRef<HTMLDivElement>(null);
 
     const close: Close = (callback) => setOpen(false, callback);
 
+    const __setState = (options: StateNode, callback: Callback | undefined) => {
+        const [newContent, newOpen] = Array.isArray(options) && typeof options[1] === 'boolean' ? options : [options, true];
+
+        setContent(newContent, callback);
+        setOpen(newOpen);
+    };
+
     const set: Set = useCallback(
-        (contentNode, callback) => {
-            if (typeof contentNode === 'function') {
-                const result = contentNode(content, isOpen);
-
-                const [newContent, newOpen] = Array.isArray(result) ? result : [result, true];
-
-                setContent(newContent, callback);
-                setOpen(newOpen);
-
-                return;
-            }
-
-            setContent(contentNode, callback);
-            setOpen(true);
-        },
+        (contentNode, callback) => __setState(typeof contentNode === 'function' ? contentNode(content, isOpen) : contentNode, callback),
         [isOpen, content]
     );
 
@@ -51,17 +44,7 @@ export const useModal: UseModal = (options) => {
         };
     }, []);
 
-    const Modal = useMemo(() => {
-        const newModal = createModal({ ...options, close, open: setOpen, set });
-
-        newModal.defaultProps = {
-            children: content,
-            isOpen,
-            ref: modalRef,
-        };
-
-        return newModal;
-    }, [isOpen, content]);
+    const Modal = useMemo(() => <Provider modal={{ close, isOpen, open: setOpen, set, styles: options }} />, [isOpen, content]);
 
     return [Modal, { set, open: setOpen, close, isOpen }];
 };

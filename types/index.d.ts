@@ -1,3 +1,3 @@
-import { createModal, Dialog, useContext, useModal } from './modules';
+import { Dialog, useContext, useModal } from './modules';
 export default useModal;
-export { createModal, Dialog, useContext };
+export { Dialog, useContext };

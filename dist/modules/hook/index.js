@@ -1,34 +1,18 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { useCallbackState } from '@fipnooone/hooks';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { createModal } from '../component';
+import React from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { Provider } from '../context';
 import { names } from '../events';
 export var useModal = function (options) {
     var _a = useCallbackState(false), isOpen = _a[0], setOpen = _a[1];
     var _b = useCallbackState(), content = _b[0], setContent = _b[1];
-    var modalRef = useRef(null);
     var close = function (callback) { return setOpen(false, callback); };
-    var set = useCallback(function (contentNode, callback) {
-        if (typeof contentNode === 'function') {
-            var result = contentNode(content, isOpen);
-            var _a = Array.isArray(result) ? result : [result, true], newContent = _a[0], newOpen = _a[1];
-            setContent(newContent, callback);
-            setOpen(newOpen);
-            return;
-        }
-        setContent(contentNode, callback);
-        setOpen(true);
-    }, [isOpen, content]);
+    var __setState = function (options, callback) {
+        var _a = Array.isArray(options) && typeof options[1] === 'boolean' ? options : [options, true], newContent = _a[0], newOpen = _a[1];
+        setContent(newContent, callback);
+        setOpen(newOpen);
+    };
+    var set = useCallback(function (contentNode, callback) { return __setState(typeof contentNode === 'function' ? contentNode(content, isOpen) : contentNode, callback); }, [isOpen, content]);
     useEffect(function () {
         var listener = function (event) {
             switch (event.code) {
@@ -45,15 +29,7 @@ export var useModal = function (options) {
             document.removeEventListener(names.open, handleOpen);
         };
     }, []);
-    var Modal = useMemo(function () {
-        var newModal = createModal(__assign(__assign({}, options), { close: close, open: setOpen, set: set }));
-        newModal.defaultProps = {
-            children: content,
-            isOpen: isOpen,
-            ref: modalRef,
-        };
-        return newModal;
-    }, [isOpen, content]);
+    var Modal = useMemo(function () { return React.createElement(Provider, { modal: { close: close, isOpen: isOpen, open: setOpen, set: set, styles: options } }); }, [isOpen, content]);
     return [Modal, { set: set, open: setOpen, close: close, isOpen: isOpen }];
 };
 //# sourceMappingURL=index.js.map

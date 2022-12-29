@@ -1,12 +1,12 @@
 import { StateValue } from '@fipnooone/hooks/types/types';
 import { ReactNode } from 'react';
 
-import { ModalProps, ModalStyles } from '../component/types';
+import { ModalStyles } from '../component/types';
 
-export type Set = (
-    contentNode: ReactNode | ((prevContent: ReactNode, prevOpen: boolean) => ReactNode | [ReactNode, boolean]),
-    callback?: (content: ReactNode) => void
-) => void;
+export type Callback = (content: ReactNode) => void;
+export type StateNode = [ReactNode, boolean] | ReactNode;
+
+export type Set = (contentNode: StateNode | ((prevContent: ReactNode, prevOpen: boolean) => StateNode), callback?: Callback) => void;
 
 export type Close = (callback?: (isOpen: boolean) => void) => void;
 
@@ -19,4 +19,4 @@ export interface ModalControls {
     isOpen: boolean;
 }
 
-export type UseModal = (options?: ModalStyles) => [React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>, ModalControls];
+export type UseModal = (options?: ModalStyles) => [ReactNode, ModalControls];

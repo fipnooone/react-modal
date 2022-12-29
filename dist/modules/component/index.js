@@ -1,32 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from '../context';
-import styles from './styles.module.css';
-var getRoot = function () {
-    var root = document.getElementById('root');
-    if (root)
-        return root;
-    return document.body;
-};
-var getBlock = function () {
-    var root = getRoot();
-    var block = document.getElementById('modals');
-    if (block)
-        return block;
-    var newBlock = document.createElement('div');
-    newBlock.id = 'modals';
-    root.appendChild(newBlock);
-    return newBlock;
-};
-export var createModal = function (_a) {
-    var block = _a.block, overlay = _a.overlay, window = _a.window, close = _a.close, open = _a.open, set = _a.set;
-    return React.forwardRef(function (_a, ref) {
-        var children = _a.children, isOpen = _a.isOpen;
-        var handleClose = function () { return close(); };
-        return ReactDOM.createPortal(React.createElement("div", { className: "modal ".concat(styles.block) + (isOpen ? " ".concat(styles.open, " open") : ''), style: block, ref: ref },
-            React.createElement("div", { className: "modal__overlay ".concat(styles.overlay), onClick: handleClose, style: overlay }),
-            React.createElement("div", { className: "modal__window ".concat(styles.window), style: window },
-                React.createElement(Provider, { modal: { close: close, open: open, set: set } }, children))), getBlock());
-    });
-};
+import { useContext } from '../context';
+import S from './styles.module.css';
+export var Modal = React.forwardRef(function (_a, ref) {
+    var children = _a.children;
+    var _b = useContext(), close = _b.close, isOpen = _b.isOpen, _c = _b.styles, styles = _c === void 0 ? {} : _c;
+    var handleClose = function () { return close(); };
+    return (React.createElement("div", { className: "modal ".concat(S.block) + (isOpen ? " ".concat(S.open, " open") : ''), style: styles.block, ref: ref },
+        React.createElement("div", { className: "modal__overlay ".concat(S.overlay), onClick: handleClose, style: styles.overlay }),
+        React.createElement("div", { className: "modal__window ".concat(S.window), style: styles.window }, children)));
+});
 //# sourceMappingURL=index.js.map
