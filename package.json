@@ -1,6 +1,6 @@
 {
 	"name": "@fipnooone/react-modal",
-	"version": "2.1.1",
+	"version": "2.1.2",
 	"main": "./dist/index.js",
 	"types": "./types/index.d.ts",
 	"author": "fipnooone",
