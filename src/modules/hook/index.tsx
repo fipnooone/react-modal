@@ -10,18 +10,28 @@ export const useModal: UseModal = (options) => {
     const [isOpen, setOpen] = useCallbackState(false);
     const [content, setContent] = useCallbackState<ReactNode>();
 
-    const close: Close = (callback) => setOpen(false, callback);
+    const close: Close = useCallback((callback) => {
+        setOpen(false, callback);
 
-    const __setState = (options: StateNode, callback: Callback | undefined) => {
+        if (options && options.closeDelay) {
+            setTimeout(() => {
+                setContent(null);
+            }, options.closeDelay);
+        } else {
+            setContent(null);
+        }
+    }, []);
+
+    const __setState = useCallback((options: StateNode, callback: Callback | undefined) => {
         const [newContent, newOpen] = Array.isArray(options) && typeof options[1] === 'boolean' ? options : [options, true];
 
         setContent(newContent, callback);
         setOpen(newOpen);
-    };
+    }, []);
 
     const set: Set = useCallback(
         (contentNode, callback) => __setState(typeof contentNode === 'function' ? contentNode(content, isOpen) : contentNode, callback),
-        [isOpen, content]
+        [isOpen, content, __setState]
     );
 
     useEffect(() => {

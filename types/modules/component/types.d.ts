@@ -9,5 +9,6 @@ export interface ModalStyles {
     block?: React.CSSProperties;
     window?: React.CSSProperties;
     overlay?: React.CSSProperties;
+    closeDelay?: number;
 }
 export declare type ModalLogic = ContextValue;
