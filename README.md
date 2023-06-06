@@ -1,3 +1,5 @@
+# Moved to https://github.com/cyberia-studio/react-modal
+
 ```tsx
 import useModal from "@fipnooone/react-modal";
 
